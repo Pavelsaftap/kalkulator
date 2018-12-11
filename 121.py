@@ -13,18 +13,19 @@ class MyWidget(QMainWindow):
         self.label.setText(self.stroka[-80:]) 
         self.initUI()
         
+        
     def initUI(self):
         self.setWindowTitle('kalkulator') 
-        self.num1.clicked.connect(self.num11)
-        self.num2.clicked.connect(self.num22)
-        self.num3.clicked.connect(self.num33)
-        self.num4.clicked.connect(self.num44)
-        self.num5.clicked.connect(self.num55)
-        self.num6.clicked.connect(self.num66)
-        self.num7.clicked.connect(self.num77)
-        self.num8.clicked.connect(self.num88)
-        self.num9.clicked.connect(self.num99)
-        self.num0.clicked.connect(self.num00)
+        self.num1.clicked.connect(self.num)
+        self.num2.clicked.connect(self.num)
+        self.num3.clicked.connect(self.num)
+        self.num4.clicked.connect(self.num)
+        self.num5.clicked.connect(self.num)
+        self.num6.clicked.connect(self.num)
+        self.num7.clicked.connect(self.num)
+        self.num8.clicked.connect(self.num)
+        self.num9.clicked.connect(self.num)
+        self.num0.clicked.connect(self.num)
         self.ravno.clicked.connect(self.res)
         self.sbros.clicked.connect(self.clea)
         self.pi.clicked.connect(self.pii)
@@ -35,76 +36,13 @@ class MyWidget(QMainWindow):
         self.minus.clicked.connect(self.minuss)
         self.delete2.clicked.connect(self.dele)
         
-    def num11(self):
+    def num(self):
         if self.flag == 0:
             self.stroka = ''
             self.flag = 1
-        self.stroka += str(1)
-        self.label.setText(self.stroka[-80:])
-        
-    def num22(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(2)
+        self.stroka += str(self.sender().text())
         self.label.setText(self.stroka[-80:])  
         
-    def num33(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(3)
-        self.label.setText(self.stroka[-80:])   
-        
-    def num44(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(4)
-        self.label.setText(self.stroka[-80:])    
-        
-    def num55(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(5)
-        self.label.setText(self.stroka[-80:])    
-    
-    def num66(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(6)
-        self.label.setText(self.stroka[-80:])  
-        
-    def num77(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(7)
-        self.label.setText(self.stroka[-80:])     
-        
-    def num88(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(8)
-        self.label.setText(self.stroka[-80:])     
-        
-    def num99(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(9)
-        self.label.setText(self.stroka[-80:])   
-        
-    def num00(self):
-        if self.flag == 0:
-            self.stroka = ''
-            self.flag = 1
-        self.stroka += str(0)
-        self.label.setText(self.stroka[-80:])   
-    
     def pii(self):
         if self.flag == 0:
             self.stroka = ''
@@ -170,6 +108,8 @@ class MyWidget(QMainWindow):
                 self.stroka = '_' * 81
                 self.flag = 0
             self.label.setText(self.stroka[-80:])    
+            
+    
  
 app = QApplication(sys.argv)
 ex = MyWidget()
