@@ -4,6 +4,15 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
  
  
+def fsin(stroka):
+    ts = stroka
+    stroka = stroka[:4] + 'radians('
+    ts = ts[4:-1]
+    print(stroka, ts)
+    
+  
+print(fsin('sin(90+45+(-5+40)) + 1*(5+6(1,5-1))'))
+ 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -12,7 +21,6 @@ class MyWidget(QMainWindow):
         self.flag = 0
         self.label.setText(self.stroka[-80:]) 
         self.initUI()
-        
         
     def initUI(self):
         self.setWindowTitle('kalkulator') 
@@ -40,6 +48,11 @@ class MyWidget(QMainWindow):
         self.kub.clicked.connect(self.kub1)
         self.stepen.clicked.connect(self.stepen1)      
         self.probel.clicked.connect(self.probell)
+        self.cos1.clicked.connect(self.cos11)
+        self.sin1.clicked.connect(self.sin11)
+        self.tan1.clicked.connect(self.tan11)
+        self.skobka1.clicked.connect(self.skobka)
+        self.skobka2.clicked.connect(self.skobka)
         
     def num(self):
         if self.flag == 0:
@@ -101,9 +114,9 @@ class MyWidget(QMainWindow):
         
     def minuss(self):
         if self.flag == 0:
-            pass
-        else:
-            self.stroka += str('-')
+            self.flag = 1
+            self.stroka = ''
+        self.stroka += str('-')
         self.label.setText(self.stroka[-80:])    
         
     def dele(self):
@@ -150,7 +163,36 @@ class MyWidget(QMainWindow):
             pass
         else:
             self.stroka += str(' ')
-        self.label.setText(self.stroka[-80:])        
+        self.label.setText(self.stroka[-80:])   
+        
+    def sin11(self):
+        if self.flag == 0:
+            self.stroka = ''
+            self.flag = 1
+        self.stroka += str('sin(')
+        self.label.setText(self.stroka[-80:])   
+    
+    def cos11(self):
+        if self.flag == 0:
+            self.stroka = ''
+            self.flag = 1
+        self.stroka += str('cos(')
+        self.label.setText(self.stroka[-80:])   
+        
+    def tan11(self):
+        if self.flag == 0:
+            self.stroka = ''
+            self.flag = 1
+        self.stroka += str('tan(')
+        self.label.setText(self.stroka[-80:])      
+        
+    def skobka(self):
+        if self.flag == 0:
+            self.stroka = ''
+            self.flag = 1
+        self.stroka += str(self.sender().text())
+        self.label.setText(self.stroka[-80:])       
+ 
  
 app = QApplication(sys.argv)
 ex = MyWidget()
