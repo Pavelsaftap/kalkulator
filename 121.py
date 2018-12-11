@@ -35,11 +35,17 @@ class MyWidget(QMainWindow):
         self.okrdel.clicked.connect(self.del22)
         self.minus.clicked.connect(self.minuss)
         self.delete2.clicked.connect(self.dele)
+        self.mod1.clicked.connect(self.mod11)
+        self.kvadr.clicked.connect(self.kvadr1)
+        self.kub.clicked.connect(self.kub1)
+        self.stepen.clicked.connect(self.stepen1)      
+        self.probel.clicked.connect(self.probell)
         
     def num(self):
         if self.flag == 0:
             self.stroka = ''
-            self.flag = 1
+            if self.sender().text() != '0':
+                self.flag = 1
         self.stroka += str(self.sender().text())
         self.label.setText(self.stroka[-80:])  
         
@@ -52,8 +58,9 @@ class MyWidget(QMainWindow):
     
     def res(self):
         try:
-            self.result1.setText(str(eval(self.stroka)))
-            self.stroka = str(eval(self.stroka))
+            a1 = str(eval(self.stroka.replace('^', '**').replace(' ', '')))
+            self.result1.setText(a1)
+            self.stroka = a1
             self.label.setText(self.stroka[-80:]) 
         except Exception:
             self.result1.setText('Хмм... Вы где-то ошиблись')
@@ -107,9 +114,43 @@ class MyWidget(QMainWindow):
             if len(self.stroka) == 0:
                 self.stroka = '_' * 81
                 self.flag = 0
-            self.label.setText(self.stroka[-80:])    
+            self.label.setText(self.stroka[-80:])  
             
+    def mod11(self):
+        if self.flag == 0:
+            pass
+        else:
+            self.stroka += str('%')
+        self.label.setText(self.stroka[-80:])
+        
+    def kvadr1(self):
+        if self.flag == 0:
+            pass
+        else:
+            self.stroka += str('^2')
+        self.label.setText(self.stroka[-80:])
+        
     
+    def kub1(self):
+        if self.flag == 0:
+            pass
+        else:
+            self.stroka += str('^3')
+        self.label.setText(self.stroka[-80:])   
+        
+    def stepen1(self):
+        if self.flag == 0:
+            pass
+        else:
+            self.stroka += str('^')
+        self.label.setText(self.stroka[-80:])    
+        
+    def probell(self):
+        if self.flag == 0:
+            pass
+        else:
+            self.stroka += str(' ')
+        self.label.setText(self.stroka[-80:])        
  
 app = QApplication(sys.argv)
 ex = MyWidget()

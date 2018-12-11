@@ -501,9 +501,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>450</y>
+      <y>470</y>
       <width>71</width>
-      <height>71</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -518,8 +518,8 @@
    <widget class="QPushButton" name="pi">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>450</y>
+      <x>10</x>
+      <y>390</y>
       <width>71</width>
       <height>71</height>
      </rect>
@@ -538,7 +538,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>450</y>
+      <y>390</y>
       <width>71</width>
       <height>71</height>
      </rect>
@@ -562,6 +562,11 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>__________________________________________________________________________________________________</string>
     </property>
@@ -570,9 +575,9 @@
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>260</y>
+      <y>270</y>
       <width>51</width>
-      <height>31</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -606,10 +611,10 @@
    <widget class="QPushButton" name="num0">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>90</x>
       <y>390</y>
-      <width>231</width>
-      <height>51</height>
+      <width>71</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -663,7 +668,7 @@
      <string>DEL</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Mminus">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -681,7 +686,7 @@
      <string>M-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="Mr">
     <property name="geometry">
      <rect>
       <x>370</x>
@@ -699,7 +704,7 @@
      <string>MR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="Mplus">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -715,6 +720,19 @@
     </property>
     <property name="text">
      <string>M+</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="probel">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>470</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
    <zorder>kvadr</zorder>
@@ -753,9 +771,10 @@
    <zorder>num0</zorder>
    <zorder>result1</zorder>
    <zorder>delete2</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>pushButton_2</zorder>
-   <zorder>pushButton_3</zorder>
+   <zorder>Mminus</zorder>
+   <zorder>Mr</zorder>
+   <zorder>Mplus</zorder>
+   <zorder>probel</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
