@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtWidgets import QInputDialog, QPushButton
 import speech_recognition as sr 
 import webbrowser
+from PyQt5 import QtGui, QtWidgets
 r = sr.Recognizer()
 
 
@@ -13,24 +14,25 @@ class AudioTimer(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        k = 0
 
     def initUI(self):
         self.btn = QPushButton('Start', self)
         self.btn.move(20, 20)
         self.btn.clicked.connect(self.doAction)
-        self.setGeometry(200, 200, 240, 70)
+        self.setGeometry(200, 300, 240, 70)
         self.setWindowTitle('Ask Yandex')
 
     def doAction(self):     
         self.btn.setText('Speak')
-        k = 1
-        with sr.Microphone() as source: 
-            audio = r.listen(source)
-            result = r.recognize_google(audio,language="ru_RU")
+        
         try:         
+            with sr.Microphone() as source: 
+                audio = r.listen(source)
+                result = r.recognize_google(audio,language="ru_RU")
             webbrowser.open_new(ask + result) 
-        except Exception:
+        except sr.UnknownValueError: 
+            pass 
+        except sr.RequestError as e: 
             pass
         self.btn.setText('Start')
         
@@ -321,9 +323,17 @@ class MyWidget(QMainWindow):
 
 
 ask = 'https://yandex.ru/search/?lr=6&text='
-
 app = QApplication(sys.argv)
+tabs = QtWidgets.QTabWidget()
 ex = MyWidget()
 eq = AudioTimer()
-ex.show()
-sys.exit(app.exec_())
+tabs.setGeometry(200, 200, 600, 670)
+tab1 = ex
+tabs.addTab(tab1, "Калькулятор")
+tab2 = QtWidgets.QWidget()
+tabs.addTab(tab2, "Tab 2")
+tab3 = QtWidgets.QWidget()
+tabs.addTab(tab3, "Tab 3")
+tabs.show()
+tabs.setCurrentIndex(0)
+app.exec_()
