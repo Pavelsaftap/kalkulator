@@ -2,16 +2,10 @@ import sys
 from math import *
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
-from PyQt5.QtWidgets import QInputDialog
+from PyQt5.QtWidgets import QInputDialog, QPushButton
 import speech_recognition as sr 
 import webbrowser
 r = sr.Recognizer()
-  
-  
-import sys
-from PyQt5.QtWidgets import (QWidget, QProgressBar,
-    QPushButton, QApplication)
-from PyQt5.QtCore import QBasicTimer
 
 
 class AudioTimer(QWidget):
@@ -19,37 +13,27 @@ class AudioTimer(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-
+        k = 0
 
     def initUI(self):
-        self.pbar = QProgressBar(self)
-        self.pbar.setGeometry(30, 40, 200, 25)
         self.btn = QPushButton('Start', self)
-        self.btn.move(40, 80)
+        self.btn.move(20, 20)
         self.btn.clicked.connect(self.doAction)
-        self.timer = QBasicTimer()
-        self.step = 0
-        self.setGeometry(300, 300, 280, 170)
-        self.setWindowTitle('QProgressBar')
-        self.show()
+        self.setGeometry(200, 200, 240, 70)
+        self.setWindowTitle('Ask Yandex')
 
-
-    def timerEvent(self, e):
-        if self.step >= 100:
-            self.timer.stop()
-            self.btn.setText('Finished')
-            return
-        self.step = self.step + 1
-        self.pbar.setValue(self.step)
-
-
-    def doAction(self):
-        if self.timer.isActive():
-            self.timer.stop()
-            self.btn.setText('Start')
-        else:
-            self.timer.start(100, self)
-            self.btn.setText('Stop')
+    def doAction(self):     
+        self.btn.setText('Speak')
+        k = 1
+        with sr.Microphone() as source: 
+            audio = r.listen(source)
+            result = r.recognize_google(audio,language="ru_RU")
+        try:         
+            webbrowser.open_new(ask + result) 
+        except Exception:
+            pass
+        self.btn.setText('Start')
+        
 
 
 def fobrabotka(stroka):
@@ -85,6 +69,7 @@ def fobrabotka(stroka):
 
 
 class MyWidget(QMainWindow):
+    
     def __init__(self):
         super().__init__()
         uic.loadUi('kalkulator.ui',self)
@@ -152,20 +137,7 @@ class MyWidget(QMainWindow):
                     if okBtnPressed:
                         webbrowser.open_new(ask + j)
                 elif i == "Микрофон":
-                    eq = AudioTimer()
-                    eq.show()
-                    '''with sr.Microphone() as source: 
-                        print("Speak:") 
-                        o, okBtnPressed = QInputDialog.getItem(self,"Запрос","Говорите:")
-                        audio = r.listen(source)
-                        result = r.recognize_google(audio,language="ru_RU")
-                    try: 
-                        webbrowser.open_new(ask + result) 
-                    except sr.UnknownValueError: 
-                        print("Could not understand audio") 
-                    except sr.RequestError as e: 
-                        print("Could not request results; {0}".format(e))   '''                 
-        
+                    eq.show()              
         
     def num(self):
         if self.flag == 0:
@@ -352,5 +324,6 @@ ask = 'https://yandex.ru/search/?lr=6&text='
 
 app = QApplication(sys.argv)
 ex = MyWidget()
+eq = AudioTimer()
 ex.show()
 sys.exit(app.exec_())
