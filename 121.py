@@ -2,17 +2,40 @@ import sys
 from math import *
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
- 
- 
-def fsin(stroka):
-    ts = stroka
-    stroka = stroka[:4] + 'radians('
-    ts = ts[4:-1]
-    print(stroka, ts)
-    
   
-print(fsin('sin(90+45+(-5+40)) + 1*(5+6(1,5-1))'))
- 
+  
+def fobrabotka(stroka):
+    b = stroka
+    b = b.replace('^', '**')
+    b = b.replace(' ', '')
+    b = b.replace('√', 'sqrt')
+    b = b.replace(')(', ')*(')
+    while True:
+        k = 0
+        for i in range(len(b)):
+            k1 = 0
+            if (b[i:i + 4] == 'sin(' and b[i:i + 7] != 'sin(rad') or \
+               (b[i:i + 4] == 'cos(' and b[i:i + 7] != 'cos(rad') or \
+               (b[i:i + 4] == 'tan(' and b[i:i + 7] != 'tan(rad'):
+                kol = 0
+                for j in range(i + 4, len(b)):
+                    if b[j] == '(':
+                        kol += 1
+                    elif b[j] == ')':
+                        kol -= 1
+                    if kol < 0:
+                        b = b[:i + 4] + 'radians(' + b[i + 4:j + 1] \
+                                      + ')' + b[j + 1:]
+                        k = 1
+                        k1 = 1
+                        break
+            if k1 == 1:
+                break
+        if k == 0:
+            break
+    return b
+
+
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -53,6 +76,8 @@ class MyWidget(QMainWindow):
         self.tan1.clicked.connect(self.tan11)
         self.skobka1.clicked.connect(self.skobka)
         self.skobka2.clicked.connect(self.skobka)
+        self.kor.clicked.connect(self.kore)
+        self.EEE.clicked.connect(self.ee)
         
     def num(self):
         if self.flag == 0:
@@ -71,7 +96,7 @@ class MyWidget(QMainWindow):
     
     def res(self):
         try:
-            a1 = str(eval(self.stroka.replace('^', '**').replace(' ', '')))
+            a1 = str(eval(fobrabotka(self.stroka)))
             self.result1.setText(a1)
             self.stroka = a1
             self.label.setText(self.stroka[-80:]) 
@@ -191,9 +216,23 @@ class MyWidget(QMainWindow):
             self.stroka = ''
             self.flag = 1
         self.stroka += str(self.sender().text())
-        self.label.setText(self.stroka[-80:])       
- 
- 
+        self.label.setText(self.stroka[-80:])    
+        
+    def kore(self):
+        if self.flag == 0:
+            self.stroka = ''
+            self.flag = 1
+        self.stroka += str('√(')
+        self.label.setText(self.stroka[-80:])  
+    
+    def ee(self):
+        if self.flag == 0:
+            self.stroka = ''
+            self.flag = 1
+        self.stroka += str('e')
+        self.label.setText(self.stroka[-80:])      
+
+
 app = QApplication(sys.argv)
 ex = MyWidget()
 ex.show()
