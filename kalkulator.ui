@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>593</width>
-    <height>663</height>
+    <width>592</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -199,7 +199,7 @@
     <property name="geometry">
      <rect>
       <x>430</x>
-      <y>390</y>
+      <y>310</y>
       <width>71</width>
       <height>71</height>
      </rect>
@@ -217,7 +217,7 @@
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>390</y>
+      <y>310</y>
       <width>71</width>
       <height>71</height>
      </rect>
@@ -378,8 +378,8 @@
    <widget class="QPushButton" name="kor">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>310</y>
+      <x>510</x>
+      <y>390</y>
       <width>71</width>
       <height>71</height>
      </rect>
@@ -391,24 +391,6 @@
     </property>
     <property name="text">
      <string>√x</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ykor">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>310</y>
-      <width>71</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>y√x</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cos1">
@@ -429,7 +411,7 @@
      <string>cos</string>
     </property>
    </widget>
-   <widget class="QCommandLinkButton" name="yandexgolos">
+   <widget class="QCommandLinkButton" name="yagolos">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -500,10 +482,10 @@
    <widget class="QPushButton" name="tan1">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>470</y>
+      <x>430</x>
+      <y>390</y>
       <width>71</width>
-      <height>51</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -595,7 +577,7 @@
      <rect>
       <x>270</x>
       <y>470</y>
-      <width>311</width>
+      <width>231</width>
       <height>51</height>
      </rect>
     </property>
@@ -725,14 +707,68 @@
    <widget class="QPushButton" name="probel">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>10</x>
       <y>470</y>
-      <width>151</width>
+      <width>231</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>61</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>memory:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelmemory">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>6</y>
+      <width>441</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cmem">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>470</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>C Memory</string>
     </property>
    </widget>
    <zorder>kvadr</zorder>
@@ -756,9 +792,8 @@
    <zorder>stepen</zorder>
    <zorder>kub</zorder>
    <zorder>kor</zorder>
-   <zorder>ykor</zorder>
    <zorder>cos1</zorder>
-   <zorder>yandexgolos</zorder>
+   <zorder>yagolos</zorder>
    <zorder>ravno</zorder>
    <zorder>sin1</zorder>
    <zorder>ceil1</zorder>
@@ -775,13 +810,16 @@
    <zorder>Mr</zorder>
    <zorder>Mplus</zorder>
    <zorder>probel</zorder>
+   <zorder>label_3</zorder>
+   <zorder>labelmemory</zorder>
+   <zorder>cmem</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>593</width>
+     <width>592</width>
      <height>21</height>
     </rect>
    </property>

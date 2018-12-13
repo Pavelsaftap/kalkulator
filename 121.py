@@ -2,6 +2,7 @@ import sys
 from math import *
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
+from PyQt5.QtWidgets import QInputDialog
   
   
 def fobrabotka(stroka):
@@ -42,6 +43,7 @@ class MyWidget(QMainWindow):
         uic.loadUi('kalkulator.ui',self)
         self.stroka = '_' * 81
         self.flag = 0
+        self.memory = 0
         self.label.setText(self.stroka[-80:]) 
         self.initUI()
         
@@ -78,6 +80,11 @@ class MyWidget(QMainWindow):
         self.skobka2.clicked.connect(self.skobka)
         self.kor.clicked.connect(self.kore)
         self.EEE.clicked.connect(self.ee)
+        self.Mr.clicked.connect(self.mr)
+        self.Mminus.clicked.connect(self.mm)
+        self.Mplus.clicked.connect(self.mp)
+        self.cmem.clicked.connect(self.cmemm)
+        self.yagolos.clicked.connect(self.k)
         
     def num(self):
         if self.flag == 0:
@@ -230,8 +237,34 @@ class MyWidget(QMainWindow):
             self.stroka = ''
             self.flag = 1
         self.stroka += str('e')
-        self.label.setText(self.stroka[-80:])      
+        self.label.setText(self.stroka[-80:]) 
+        
+    def mr(self):
+        if self.flag == 0:
+            self.stroka = ''
+            if self.memory != 0:
+                self.flag = 1
+        self.stroka += str(self.memory)
+        self.labelmemory.setText(str(self.memory)) 
+        self.label.setText(self.stroka[-80:])
 
+    def mm(self):
+        try:
+            self.memory -= int(self.result1.text())
+        except Exception:
+            pass
+        self.labelmemory.setText(str(self.memory)) 
+        
+    def mp(self):
+        try:
+            self.memory += int(self.result1.text()) 
+        except Exception:
+            pass
+        self.labelmemory.setText(str(self.memory)) 
+        
+    def cmemm(self):
+        self.memory = 0
+        self.labelmemory.setText(str(self.memory))     
 
 app = QApplication(sys.argv)
 ex = MyWidget()
