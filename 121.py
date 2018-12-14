@@ -1,8 +1,11 @@
 import sys
+import keyboard
 from math import *
-from PyQt5 import uic
+from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
-from PyQt5.QtWidgets import QInputDialog, QPushButton
+from PyQt5.QtWidgets import QInputDialog, QPushButton, QColorDialog
+from PyQt5.QtWidgets import QCheckBox
+from PyQt5.QtCore import QSize 
 import speech_recognition as sr 
 import webbrowser
 from PyQt5 import QtGui, QtWidgets
@@ -23,8 +26,6 @@ class AudioTimer(QWidget):
         self.setWindowTitle('Ask Yandex')
 
     def doAction(self):     
-        self.btn.setText('Speak')
-        
         try:         
             with sr.Microphone() as source: 
                 audio = r.listen(source)
@@ -34,7 +35,8 @@ class AudioTimer(QWidget):
             pass 
         except sr.RequestError as e: 
             pass
-        self.btn.setText('Start')
+        except Exception:
+            pass
         
 
 
@@ -44,45 +46,51 @@ def fobrabotka(stroka):
     b = b.replace(' ', '')
     b = b.replace('√', 'sqrt')
     b = b.replace(')(', ')*(')
-    while True:
-        k = 0
-        for i in range(len(b)):
-            k1 = 0
-            if (b[i:i + 4] == 'sin(' and b[i:i + 7] != 'sin(rad') or \
-               (b[i:i + 4] == 'cos(' and b[i:i + 7] != 'cos(rad') or \
-               (b[i:i + 4] == 'tan(' and b[i:i + 7] != 'tan(rad'):
-                kol = 0
-                for j in range(i + 4, len(b)):
-                    if b[j] == '(':
-                        kol += 1
-                    elif b[j] == ')':
-                        kol -= 1
-                    if kol < 0:
-                        b = b[:i + 4] + 'radians(' + b[i + 4:j + 1] \
-                                      + ')' + b[j + 1:]
-                        k = 1
-                        k1 = 1
-                        break
-            if k1 == 1:
+    b = b.replace("округлить", 'ceil')
+    if er.checkskobka.isChecked():
+        if b.count('(') > b.count(')'):
+            b += (b.count('(') - b.count(')')) * ')'
+    if er.checsin.isChecked() == False:
+        while True:
+            k = 0
+            for i in range(len(b)):
+                k1 = 0
+                if (b[i:i + 4] == 'sin(' and b[i:i + 7] != 'sin(rad') or \
+                   (b[i:i + 4] == 'cos(' and b[i:i + 7] != 'cos(rad') or \
+                   (b[i:i + 4] == 'tan(' and b[i:i + 7] != 'tan(rad'):
+                    kol = 0
+                    for j in range(i + 4, len(b)):
+                        if b[j] == '(':
+                            kol += 1
+                        elif b[j] == ')':
+                            kol -= 1
+                        if kol < 0:
+                            b = b[:i + 4] + 'radians(' + b[i + 4:j + 1] \
+                                          + ')' + b[j + 1:]
+                            k = 1
+                            k1 = 1
+                            break
+                if k1 == 1:
+                    break
+            if k == 0:
                 break
-        if k == 0:
-            break
     return b
 
 
 class MyWidget(QMainWindow):
     
-    def __init__(self):
+    def __init__(self):        
         super().__init__()
         uic.loadUi('kalkulator.ui',self)
         self.stroka = '_' * 81
         self.flag = 0
-        self.memory = 0
+        self.memory = 0 
+        self.setWindowTitle('kalkulator') 
         self.label.setText(self.stroka[-80:]) 
         self.initUI()
         
     def initUI(self):
-        self.setWindowTitle('kalkulator') 
+
         self.num1.clicked.connect(self.num)
         self.num2.clicked.connect(self.num)
         self.num3.clicked.connect(self.num)
@@ -119,6 +127,7 @@ class MyWidget(QMainWindow):
         self.Mplus.clicked.connect(self.mp)
         self.cmem.clicked.connect(self.cmemm)
         self.yagolos.clicked.connect(self.run)
+        self.ceil1.clicked.connect(self.ceil2)
         
     def run(self):
             i, okBtnPressed = QInputDialog.getItem(
@@ -302,6 +311,13 @@ class MyWidget(QMainWindow):
         self.stroka += str(self.memory)
         self.labelmemory.setText(str(self.memory)) 
         self.label.setText(self.stroka[-80:])
+    
+    def ceil2(self):
+        if self.flag == 0:
+            pass
+        else:
+            self.stroka = "округлить" + '(' + self.stroka + ')'
+            self.label.setText(self.stroka[-80:])     
 
     def mm(self):
         try:
@@ -322,18 +338,89 @@ class MyWidget(QMainWindow):
         self.labelmemory.setText(str(self.memory))     
 
 
+class MyWidget3(QMainWindow):
+    
+    def __init__(self): 
+        super().__init__()
+        uic.loadUi('settings1.ui',self)
+        self.initUI()
+        
+    def initUI(self):  
+        self.chngclr.clicked.connect(self.choosecolor)
+        self.changecol.clicked.connect(self.choosecol)
+
+    def choosecolor(self):
+        color1 = QColorDialog.getColor()
+        if color1.isValid():
+            self.setStyleSheet("background-color: {}".format(color1.name()))
+            ex.setStyleSheet("background-color: {}".format(color1.name()))
+            
+    def choosecol(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            ex.num1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num2.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num3.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num4.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num5.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num6.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num7.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num8.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num9.setStyleSheet("background-color: {}".format(color.name()))
+            ex.num0.setStyleSheet("background-color: {}".format(color.name()))
+            ex.ravno.setStyleSheet("background-color: {}".format(color.name()))
+            ex.sbros.setStyleSheet("background-color: {}".format(color.name()))
+            ex.pi.setStyleSheet("background-color: {}".format(color.name()))
+            ex.plus1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.umn.setStyleSheet("background-color: {}".format(color.name()))
+            ex.del1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.okrdel.setStyleSheet("background-color: {}".format(color.name()))
+            ex.minus.setStyleSheet("background-color: {}".format(color.name()))
+            ex.delete2.setStyleSheet("background-color: {}".\
+                                     format(color.name()))
+            ex.mod1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.kvadr.setStyleSheet("background-color: {}".format(color.name()))
+            ex.kub.setStyleSheet("background-color: {}".format(color.name()))
+            ex.stepen.setStyleSheet("background-color: {}".format(color.name()))   
+            ex.probel.setStyleSheet("background-color: {}".format(color.name()))
+            ex.cos1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.sin1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.tan1.setStyleSheet("background-color: {}".format(color.name()))
+            ex.skobka1.setStyleSheet("background-color: {}".\
+                                     format(color.name()))
+            ex.skobka2.setStyleSheet("background-color: {}".\
+                                     format(color.name()))
+            ex.kor.setStyleSheet("background-color: {}".format(color.name()))
+            ex.EEE.setStyleSheet("background-color: {}".format(color.name()))
+            ex.Mr.setStyleSheet("background-color: {}".format(color.name()))
+            ex.Mminus.setStyleSheet("background-color: {}".format(color.name()))
+            ex.Mplus.setStyleSheet("background-color: {}".format(color.name()))
+            ex.cmem.setStyleSheet("background-color: {}".format(color.name()))
+            ex.yagolos.setStyleSheet("background-color: {}".\
+                                     format(color.name()))
+            ex.ceil1.setStyleSheet("background-color: {}".format(color.name()))
+            self.chngclr.setStyleSheet("background-color: {}".\
+                                       format(color.name()))
+            self.changecol.setStyleSheet("background-color: {}".\
+                                         format(color.name()))     
+            ex.label_2.setStyleSheet("background-color: {}".\
+                                     format(color.name()))
+            
+          
+        
 ask = 'https://yandex.ru/search/?lr=6&text='
 app = QApplication(sys.argv)
 tabs = QtWidgets.QTabWidget()
 ex = MyWidget()
 eq = AudioTimer()
+er = MyWidget3()
 tabs.setGeometry(200, 200, 600, 670)
+tabs.setWindowTitle('kalkulator')
 tab1 = ex
 tabs.addTab(tab1, "Калькулятор")
-tab2 = QtWidgets.QWidget()
-tabs.addTab(tab2, "Tab 2")
-tab3 = QtWidgets.QWidget()
-tabs.addTab(tab3, "Tab 3")
+tab3 = er
+tabs.addTab(tab3, 'settings')
+tabs.setMinimumSize(QSize(600, 670)) 
 tabs.show()
 tabs.setCurrentIndex(0)
 app.exec_()
