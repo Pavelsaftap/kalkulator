@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
   <property name="animated">
    <bool>true</bool>
   </property>
@@ -713,9 +716,9 @@
    <widget class="QPushButton" name="probel">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>90</x>
       <y>470</y>
-      <width>231</width>
+      <width>151</width>
       <height>51</height>
      </rect>
     </property>
@@ -777,6 +780,24 @@
      <string>C Memory</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="to4ka">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>470</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>26</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>.</string>
+    </property>
+   </widget>
    <zorder>kvadr</zorder>
    <zorder>num1</zorder>
    <zorder>okrdel</zorder>
@@ -819,6 +840,7 @@
    <zorder>label_3</zorder>
    <zorder>labelmemory</zorder>
    <zorder>cmem</zorder>
+   <zorder>to4ka</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">

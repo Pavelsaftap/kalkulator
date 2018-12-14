@@ -1,6 +1,7 @@
 import sys
 import keyboard
 from math import *
+from PyQt5 import QtGui, QtWidgets
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtWidgets import QInputDialog, QPushButton, QColorDialog
@@ -8,7 +9,7 @@ from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtCore import QSize 
 import speech_recognition as sr 
 import webbrowser
-from PyQt5 import QtGui, QtWidgets
+cithri = '1234567890.'
 r = sr.Recognizer()
 
 
@@ -37,7 +38,6 @@ class AudioTimer(QWidget):
             pass
         except Exception:
             pass
-        
 
 
 def fobrabotka(stroka):
@@ -50,6 +50,8 @@ def fobrabotka(stroka):
     if er.checkskobka.isChecked():
         if b.count('(') > b.count(')'):
             b += (b.count('(') - b.count(')')) * ')'
+    if len(b) >= 2 and b[0] == '0' and b[1] != '.':
+            b = b[1:]
     if er.checsin.isChecked() == False:
         while True:
             k = 0
@@ -77,6 +79,21 @@ def fobrabotka(stroka):
     return b
 
 
+def cleaner(stroka):
+    b = stroka
+    while True:
+        k = 0
+        for i in range(1, len(b) - 1):
+            if b[i] == '0':
+                if b[i - 1] not in cithri and b[i + 1] in cithri[:-1]:
+                    b = b[:i] + b[i+1:]
+                    k = 1
+                    break
+        if k == 0:
+            break
+    return b
+                    
+    
 class MyWidget(QMainWindow):
     
     def __init__(self):        
@@ -90,7 +107,7 @@ class MyWidget(QMainWindow):
         self.initUI()
         
     def initUI(self):
-
+        self.to4ka.clicked.connect(self.to4kaf)
         self.num1.clicked.connect(self.num)
         self.num2.clicked.connect(self.num)
         self.num3.clicked.connect(self.num)
@@ -150,11 +167,21 @@ class MyWidget(QMainWindow):
                 elif i == "Микрофон":
                     eq.show()              
         
+    def to4kaf(self):
+        if self.flag == 0 and self.stroka != '0':
+            pass
+        else:
+            self.flag = 1
+            self.stroka += '.'
+            self.label.setText(self.stroka[-80:])     
+    
     def num(self):
         if self.flag == 0:
             self.stroka = ''
-            if self.sender().text() != '0':
-                self.flag = 1
+            self.flag = 1
+        if len(self.stroka) >= 2 and self.stroka[0] == '0' \
+           and self.stroka[1] in cithri[:-1]:
+            self.stroka = self.stroka[1:]
         self.stroka += str(self.sender().text())
         self.label.setText(self.stroka[-80:])  
         
@@ -167,7 +194,7 @@ class MyWidget(QMainWindow):
     
     def res(self):
         try:
-            a1 = str(eval(fobrabotka(self.stroka)))
+            a1 = str(eval(fobrabotka(cleaner(self.stroka))))
             self.result1.setText(a1)
             self.stroka = a1
             self.label.setText(self.stroka[-80:]) 
@@ -321,21 +348,52 @@ class MyWidget(QMainWindow):
 
     def mm(self):
         try:
-            self.memory -= int(self.result1.text())
+            self.memory -= float(self.result1.text())
         except Exception:
             pass
         self.labelmemory.setText(str(self.memory)) 
         
     def mp(self):
         try:
-            self.memory += int(self.result1.text()) 
+            self.memory += float(self.result1.text()) 
         except Exception:
             pass
         self.labelmemory.setText(str(self.memory)) 
         
     def cmemm(self):
         self.memory = 0
-        self.labelmemory.setText(str(self.memory))     
+        self.labelmemory.setText(str(self.memory))    
+        
+    def keyPressEvent(self, e):
+        number = int(e.key())
+        if number >= 48 and number <= 57:
+            number -= 48
+            if self.flag == 0:
+                self.stroka = ''
+                if number != 0:
+                    self.flag = 1
+            self.stroka += str(number)
+            self.label.setText(self.stroka[-80:]) 
+        elif number == 16777219:
+            self.dele()
+        elif number == 61 or number == 16777221 or number == 16777220:
+            self.res()
+        elif number == 45:
+            self.minuss()    
+        elif number == 42:
+            self.umno()
+        elif number == 67:
+            self.clea()
+        elif number == 80:
+            self.pii()
+        elif number == 43:
+            self.plus()
+        elif number == 47:
+            self.del11()  
+        elif number == 69:
+            self.ee()         
+        elif number == 77:
+            self.mr()        
 
 
 class MyWidget3(QMainWindow):
@@ -405,9 +463,9 @@ class MyWidget3(QMainWindow):
                                          format(color.name()))     
             ex.label_2.setStyleSheet("background-color: {}".\
                                      format(color.name()))
+            ex.to4ka.setStyleSheet("background-color: {}".format(color.name()))
             
           
-        
 ask = 'https://yandex.ru/search/?lr=6&text='
 app = QApplication(sys.argv)
 tabs = QtWidgets.QTabWidget()
