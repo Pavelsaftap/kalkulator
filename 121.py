@@ -123,8 +123,8 @@ class MyWidget(QMainWindow):
         self.pi.clicked.connect(self.pii)
         self.plus1.clicked.connect(self.plus)
         self.umn.clicked.connect(self.umno)
-        self.del1.clicked.connect(self.del11)
-        self.okrdel.clicked.connect(self.del22)
+        self.del1.clicked.connect(self.del_true)
+        self.okrdel.clicked.connect(self.del_floor)
         self.minus.clicked.connect(self.minuss)
         self.delete2.clicked.connect(self.dele)
         self.mod1.clicked.connect(self.mod11)
@@ -221,14 +221,14 @@ class MyWidget(QMainWindow):
             self.stroka += str('*')
         self.label.setText(self.stroka[-80:]) 
         
-    def del11(self):
+    def del_true(self):
         if self.flag == 0:
             pass
         else:
             self.stroka += str('/')
         self.label.setText(self.stroka[-80:])         
         
-    def del22(self):
+    def del_floor (self):
         if self.flag == 0:
             pass
         else:
@@ -389,89 +389,256 @@ class MyWidget(QMainWindow):
         elif number == 43:
             self.plus()
         elif number == 47:
-            self.del11()  
+            self.del_true()  
         elif number == 69:
             self.ee()         
         elif number == 77:
             self.mr()        
 
 
-class MyWidget3(QMainWindow):
+class sett(QMainWindow):
     
     def __init__(self): 
         super().__init__()
         uic.loadUi('settings1.ui',self)
+        self.x = '#d8d8d8'
+        self.b = '#ffffff'
+        self.t = '#000000'
         self.initUI()
         
     def initUI(self):  
         self.chngclr.clicked.connect(self.choosecolor)
         self.changecol.clicked.connect(self.choosecol)
+        self.changetext.clicked.connect(self.choosetextcolor)
 
     def choosecolor(self):
         color1 = QColorDialog.getColor()
         if color1.isValid():
+            self.b = color1.name()
             self.setStyleSheet("background-color: {}".format(color1.name()))
             ex.setStyleSheet("background-color: {}".format(color1.name()))
+            ex.label.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))
+            ex.label_3.setStyleSheet("background-color: " + self.b + ';' + "color: {}".format(self.t))               
+            self.checkskobka.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))
+            self.checsin.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))
+            self.label.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))
+            self.label_2.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))
+            self.label_4.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))    
+            ex.labelmemory.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))
+            ex.result1.setStyleSheet("background-color: " + self.b + ';'+ "color: {}".format(self.t))         
             
     def choosecol(self):
         color = QColorDialog.getColor()
         if color.isValid():
-            ex.num1.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num2.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num3.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num4.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num5.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num6.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num7.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num8.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num9.setStyleSheet("background-color: {}".format(color.name()))
-            ex.num0.setStyleSheet("background-color: {}".format(color.name()))
-            ex.ravno.setStyleSheet("background-color: {}".format(color.name()))
-            ex.sbros.setStyleSheet("background-color: {}".format(color.name()))
-            ex.pi.setStyleSheet("background-color: {}".format(color.name()))
-            ex.plus1.setStyleSheet("background-color: {}".format(color.name()))
-            ex.umn.setStyleSheet("background-color: {}".format(color.name()))
-            ex.del1.setStyleSheet("background-color: {}".format(color.name()))
-            ex.okrdel.setStyleSheet("background-color: {}".format(color.name()))
-            ex.minus.setStyleSheet("background-color: {}".format(color.name()))
+            self.x = color.name()
+            ex.num1.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num2.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num3.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num4.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num5.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num6.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num7.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num8.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num9.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.num0.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.ravno.setStyleSheet("background-color: {}".format(color.name()) \
+                                   + ';'+ "color: {}".format(self.t))
+            ex.sbros.setStyleSheet("background-color: {}".format(color.name())\
+                                   + ';'+ "color: {}".format(self.t))
+            ex.pi.setStyleSheet("background-color: {}".format(color.name()) +\
+                                ';'+ "color: {}".format(self.t))
+            ex.plus1.setStyleSheet("background-color: {}".format(color.name()) \
+                                   + ';'+ "color: {}".format(self.t))
+            ex.umn.setStyleSheet("background-color: {}".format(color.name()) +\
+                                 ';'+ "color: {}".format(self.t))
+            ex.del1.setStyleSheet("background-color: {}".format(color.name()) +\
+                                  ';'+ "color: {}".format(self.t))
+            ex.okrdel.setStyleSheet("background-color: {}".format(color.name())\
+                                    + ';'+ "color: {}".format(self.t))
+            ex.minus.setStyleSheet("background-color: {}".format(color.name())\
+                                   + ';'+ "color: {}".format(self.t))
             ex.delete2.setStyleSheet("background-color: {}".\
-                                     format(color.name()))
-            ex.mod1.setStyleSheet("background-color: {}".format(color.name()))
-            ex.kvadr.setStyleSheet("background-color: {}".format(color.name()))
-            ex.kub.setStyleSheet("background-color: {}".format(color.name()))
-            ex.stepen.setStyleSheet("background-color: {}".format(color.name()))   
-            ex.probel.setStyleSheet("background-color: {}".format(color.name()))
-            ex.cos1.setStyleSheet("background-color: {}".format(color.name()))
-            ex.sin1.setStyleSheet("background-color: {}".format(color.name()))
-            ex.tan1.setStyleSheet("background-color: {}".format(color.name()))
+                                     format(color.name())\
+                                     + ';'+ "color: {}".format(self.t))
+            ex.mod1.setStyleSheet("background-color: {}".format(color.name())\
+                                  + ';'+ "color: {}".format(self.t))
+            ex.kvadr.setStyleSheet("background-color: {}".format(color.name()) \
+                                   + ';'+ "color: {}".format(self.t))
+            ex.kub.setStyleSheet("background-color: {}".format(color.name()) \
+                                 + ';'+ "color: {}".format(self.t))
+            ex.stepen.setStyleSheet("background-color: {}".format(color.name())\
+                                    + ';'+ "color: {}".format(self.t))   
+            ex.probel.setStyleSheet("background-color: {}".format(color.name())\
+                                    + ';'+ "color: {}".format(self.t))
+            ex.cos1.setStyleSheet("background-color: {}".format(color.name())\
+                                  + ';'+ "color: {}".format(self.t))
+            ex.sin1.setStyleSheet("background-color: {}".format(color.name())\
+                                  + ';'+ "color: {}".format(self.t))
+            ex.tan1.setStyleSheet("background-color: {}".format(color.name())\
+                                  + ';'+ "color: {}".format(self.t))
             ex.skobka1.setStyleSheet("background-color: {}".\
-                                     format(color.name()))
+                                     format(color.name()) + ';'\
+                                     + "color: {}".format(self.t))
             ex.skobka2.setStyleSheet("background-color: {}".\
-                                     format(color.name()))
-            ex.kor.setStyleSheet("background-color: {}".format(color.name()))
-            ex.EEE.setStyleSheet("background-color: {}".format(color.name()))
-            ex.Mr.setStyleSheet("background-color: {}".format(color.name()))
-            ex.Mminus.setStyleSheet("background-color: {}".format(color.name()))
-            ex.Mplus.setStyleSheet("background-color: {}".format(color.name()))
-            ex.cmem.setStyleSheet("background-color: {}".format(color.name()))
+                                     format(color.name()) + ';'+ "color: {}".\
+                                     format(self.t))
+            ex.kor.setStyleSheet("background-color: {}".format(color.name()) \
+                                 + ';'+ "color: {}".format(self.t))
+            ex.EEE.setStyleSheet("background-color: {}".format(color.name()) \
+                                 + ';'+ "color: {}".format(self.t))
+            ex.Mr.setStyleSheet("background-color: {}".format(color.name()) \
+                                + ';'+ "color: {}".format(self.t))
+            ex.Mminus.setStyleSheet("background-color: {}".format(color.name())\
+                                    + ';'+ "color: {}".format(self.t))
+            ex.Mplus.setStyleSheet("background-color: {}".format(color.name())\
+                                   + ';'+ "color: {}".format(self.t))
+            ex.cmem.setStyleSheet("background-color: {}".format(color.name()) \
+                                  + ';'+ "color: {}".format(self.t))
             ex.yagolos.setStyleSheet("background-color: {}".\
-                                     format(color.name()))
-            ex.ceil1.setStyleSheet("background-color: {}".format(color.name()))
+                                     format(color.name()) + ';'\
+                                     + "color: {}".format(self.t))
+            ex.ceil1.setStyleSheet("background-color: {}".format(color.name())\
+                                   + ';'+ "color: {}".format(self.t))
             self.chngclr.setStyleSheet("background-color: {}".\
-                                       format(color.name()))
+                                       format(color.name()) + ';'+ "color: {}".\
+                                       format(self.t))
             self.changecol.setStyleSheet("background-color: {}".\
-                                         format(color.name()))     
+                                         format(color.name()) + ';' +\
+                                         "color: {}".format(self.t)) 
             ex.label_2.setStyleSheet("background-color: {}".\
-                                     format(color.name()))
-            ex.to4ka.setStyleSheet("background-color: {}".format(color.name()))
+                                     format(color.name()) + ';'+ "color: {}".\
+                                     format(self.t))
+            ex.to4ka.setStyleSheet("background-color: {}".format(color.name())\
+                                   + ';'+ "color: {}".format(self.t))
+            self.changetext.setStyleSheet("background-color: {}".\
+                                          format(color.name()) + ';' +\
+                                          "color: {}".format(self.t))
             
-          
+        
+    def choosetextcolor(self):
+        color = QColorDialog.getColor()
+        if color.isValid():   
+            self.t = color.name()
+            ex.num1.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num2.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num3.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num4.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num5.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num6.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num7.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num8.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num9.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.num0.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.ravno.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.sbros.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.pi.setStyleSheet("background-color: " + self.x + ';'+\
+                                "color: {}".format(color.name()))
+            ex.plus1.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.umn.setStyleSheet("background-color: " + self.x + ';'+\
+                                 "color: {}".format(color.name()))
+            ex.del1.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.okrdel.setStyleSheet("background-color: " + self.x + ';'+\
+                                    "color: {}".format(color.name()))
+            ex.minus.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.delete2.setStyleSheet("background-color: " + self.x + ';'+\
+                                     "color: {}".format(color.name()))
+            ex.mod1.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.kvadr.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.kub.setStyleSheet("background-color: " + self.x + ';'+\
+                                 "color: {}".format(color.name()))
+            ex.stepen.setStyleSheet("background-color: " + self.x + ';'+\
+                                    "color: {}".format(color.name()))   
+            ex.probel.setStyleSheet("background-color: " + self.x + ';'+\
+                                    "color: {}".format(color.name()))
+            ex.cos1.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.sin1.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.tan1.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.skobka1.setStyleSheet("background-color: " + self.x + ';'+\
+                                     "color: {}".format(color.name()))
+            ex.skobka2.setStyleSheet("background-color: " + self.x +\
+                                     ';'+ "color: {}".format(color.name()))
+            ex.kor.setStyleSheet("background-color: " + self.x + ';'+\
+                                 "color: {}".format(color.name()))
+            ex.EEE.setStyleSheet("background-color: " + self.x + ';'+\
+                                 "color: {}".format(color.name()))
+            ex.Mr.setStyleSheet("background-color: " + self.x + ';'+\
+                                "color: {}".format(color.name()))
+            ex.Mminus.setStyleSheet("background-color: " + self.x + ';'+\
+                                    "color: {}".format(color.name()))
+            ex.Mplus.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.cmem.setStyleSheet("background-color: " + self.x + ';'+\
+                                  "color: {}".format(color.name()))
+            ex.ceil1.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))
+            self.chngclr.setStyleSheet("background-color: " + self.x + ';'+\
+                                       "color: {}".format(color.name()))
+            self.changecol.setStyleSheet("background-color: " + self.x + ';'+\
+                                         "color: {}".format(color.name()))     
+            ex.label_2.setStyleSheet("background-color: " + self.x + ';'+\
+                                     "color: {}".format(color.name()))
+            ex.to4ka.setStyleSheet("background-color: " + self.x + ';'+\
+                                   "color: {}".format(color.name()))   
+            self.changetext.setStyleSheet("background-color: " + self.x + ';'+\
+                                          "color: {}".format(color.name()))
+            ex.labelmemory.setStyleSheet("background-color: " + self.b + ';'+\
+                                         "color: {}".format(color.name()))
+            ex.result1.setStyleSheet("background-color: " + self.b + ';'+\
+                                     "color: {}".format(color.name()))
+            ex.yagolos.setStyleSheet("background-color: " + self.x + ';'+\
+                                     "color: {}".format(color.name()))
+            ex.label.setStyleSheet("background-color: " + self.b + ';'+\
+                                   "color: {}".format(color.name()))
+            ex.label_3.setStyleSheet("background-color: " + self.b + ';'+\
+                                     "color: {}".format(color.name()))
+            self.checkskobka.setStyleSheet("background-color: " + self.b + ';'+\
+                                           "color: {}".format(color.name()))
+            self.checsin.setStyleSheet("background-color: " + self.b + ';'+\
+                                       "color: {}".format(color.name()))
+            self.label.setStyleSheet("background-color: " + self.b + ';'+\
+                                     "color: {}".format(color.name()))
+            self.label_2.setStyleSheet("background-color: " + self.b + ';'+\
+                                       "color: {}".format(color.name()))
+            self.label_4.setStyleSheet("background-color: " + self.b + ';'\
+                                       + "color: {}".format(color.name()))
+            
+            
 ask = 'https://yandex.ru/search/?lr=6&text='
 app = QApplication(sys.argv)
 tabs = QtWidgets.QTabWidget()
 ex = MyWidget()
 eq = AudioTimer()
-er = MyWidget3()
+er = sett()
 tabs.setGeometry(200, 200, 600, 670)
 tabs.setWindowTitle('kalkulator')
 tab1 = ex

@@ -29,9 +29,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>30</x>
       <y>30</y>
-      <width>121</width>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
@@ -54,15 +54,15 @@
      </rect>
     </property>
     <property name="text">
-     <string>change color</string>
+     <string>изменить цвет фона</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checsin">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>170</y>
-      <width>341</width>
+      <y>280</y>
+      <width>361</width>
       <height>41</height>
      </rect>
     </property>
@@ -82,8 +82,8 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>250</y>
-      <width>441</width>
+      <y>350</y>
+      <width>531</width>
       <height>41</height>
      </rect>
     </property>
@@ -105,9 +105,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>30</x>
       <y>90</y>
-      <width>141</width>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
@@ -130,31 +130,39 @@
      </rect>
     </property>
     <property name="text">
-     <string>change color</string>
+     <string>изменить цвет кнопок</string>
     </property>
    </widget>
-   <widget class="QScrollArea" name="scrollArea">
+   <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>380</y>
-      <width>251</width>
-      <height>141</height>
+      <x>30</x>
+      <y>160</y>
+      <width>201</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+     </font>
     </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>249</width>
-       <height>139</height>
-      </rect>
-     </property>
-    </widget>
+    <property name="text">
+     <string>Цвет текста</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="changetext">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>170</y>
+      <width>181</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>изменить цвет текста</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
