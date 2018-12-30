@@ -41,57 +41,64 @@ class AudioTimer(QWidget):
 
 
 def fobrabotka(stroka):
-    b = stroka
-    b = b.replace('^', '**')
-    b = b.replace(' ', '')
-    b = b.replace('√', 'sqrt')
-    b = b.replace(')(', ')*(')
-    b = b.replace("округлить", 'ceil')
+    preparing_str = stroka
+    preparing_str = preparing_str.replace('^', '**')
+    preparing_str = preparing_str.replace(' ', '')
+    preparing_str = preparing_str.replace('√', 'sqrt')
+    preparing_str = preparing_str.replace(')(', ')*(')
+    preparing_str = preparing_str.replace("округлить", 'ceil')
     if er.checkskobka.isChecked():
-        if b.count('(') > b.count(')'):
-            b += (b.count('(') - b.count(')')) * ')'
-    if len(b) >= 2 and b[0] == '0' and b[1] != '.':
-            b = b[1:]
+        if preparing_str.count('(') > preparing_str.count(')'):
+            preparing_str += (preparing_str.count('(') \
+                              - preparing_str.count(')')) * ')'
+    if len(preparing_str) >= 2 and preparing_str[0] == '0'\
+       and preparing_str[1] != '.':
+            preparing_str = preparing_str[1:]
     if er.checsin.isChecked() == False:
         while True:
-            k = 0
-            for i in range(len(b)):
-                k1 = 0
-                if (b[i:i + 4] == 'sin(' and b[i:i + 7] != 'sin(rad') or \
-                   (b[i:i + 4] == 'cos(' and b[i:i + 7] != 'cos(rad') or \
-                   (b[i:i + 4] == 'tan(' and b[i:i + 7] != 'tan(rad'):
+            circleflag = 0
+            for i in range(len(preparing_str)):
+                podcircleflag = 0
+                if (preparing_str[i:i + 4] == 'sin(' and \
+                    preparing_str[i:i + 7] != 'sin(rad') or \
+                   (preparing_str[i:i + 4] == 'cos(' and\
+                    preparing_str[i:i + 7] != 'cos(rad') or \
+                   (preparing_str[i:i + 4] == 'tan(' and\
+                    preparing_str[i:i + 7] != 'tan(rad'):
                     kol = 0
-                    for j in range(i + 4, len(b)):
-                        if b[j] == '(':
+                    for j in range(i + 4, len(preparing_str)):
+                        if preparing_str[j] == '(':
                             kol += 1
-                        elif b[j] == ')':
+                        elif preparing_str[j] == ')':
                             kol -= 1
                         if kol < 0:
-                            b = b[:i + 4] + 'radians(' + b[i + 4:j + 1] \
-                                          + ')' + b[j + 1:]
-                            k = 1
-                            k1 = 1
+                            preparing_str = preparing_str[:i + 4] + \
+                                'radians(' + preparing_str[i + 4:j + 1] \
+                                          + ')' + preparing_str[j + 1:]
+                            circleflag = 1
+                            podcircleflag = 1
                             break
-                if k1 == 1:
+                if podcircleflag == 1:
                     break
-            if k == 0:
+            if circleflag == 0:
                 break
-    return b
+    return preparing_str
 
 
 def cleaner(stroka):
-    b = stroka
+    preparing_str = stroka
     while True:
         k = 0
-        for i in range(1, len(b) - 1):
-            if b[i] == '0':
-                if b[i - 1] not in cithri and b[i + 1] in cithri[:-1]:
-                    b = b[:i] + b[i+1:]
+        for i in range(1, len(preparing_str) - 1):
+            if preparing_str[i] == '0':
+                if preparing_str[i - 1] not in cithri and\
+                   preparing_str[i + 1] in cithri[:-1]:
+                    preparing_str = preparing_str[:i] + preparing_str[i+1:]
                     k = 1
                     break
         if k == 0:
             break
-    return b
+    return preparing_str
                     
     
 class MyWidget(QMainWindow):
@@ -100,7 +107,7 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('kalkulator.ui',self)
         self.stroka = '_' * 81
-        self.flag = 0
+        self.flag_empty_str = 0
         self.memory = 0 
         self.setWindowTitle('kalkulator') 
         self.label.setText(self.stroka[-80:]) 
@@ -168,17 +175,17 @@ class MyWidget(QMainWindow):
                     eq.show()              
         
     def to4kaf(self):
-        if self.flag == 0 and self.stroka != '0':
+        if self.flag_empty_str == 0 and self.stroka != '0':
             pass
         else:
-            self.flag = 1
+            self.flag_empty_str = 1
             self.stroka += '.'
             self.label.setText(self.stroka[-80:])     
     
     def num(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         if len(self.stroka) >= 2 and self.stroka[0] == '0' \
            and self.stroka[1] in cithri[:-1]:
             self.stroka = self.stroka[1:]
@@ -186,9 +193,9 @@ class MyWidget(QMainWindow):
         self.label.setText(self.stroka[-80:])  
         
     def pii(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += 'pi'
         self.label.setText(self.stroka[-80:])          
     
@@ -203,64 +210,64 @@ class MyWidget(QMainWindow):
         
     def clea(self):
         self.stroka = '_' * 81
-        self.flag = 0  
+        self.flag_empty_str = 0  
         self.label.setText(self.stroka[-80:]) 
         self.result1.setText(str(0))
         
     def plus(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('+')
         self.label.setText(self.stroka[-80:])  
         
     def umno(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('*')
         self.label.setText(self.stroka[-80:]) 
         
     def del_true(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('/')
         self.label.setText(self.stroka[-80:])         
         
     def del_floor (self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('//')
         self.label.setText(self.stroka[-80:])     
         
     def minuss(self):
-        if self.flag == 0:
-            self.flag = 1
+        if self.flag_empty_str == 0:
+            self.flag_empty_str = 1
             self.stroka = ''
         self.stroka += str('-')
         self.label.setText(self.stroka[-80:])    
         
     def dele(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka = self.stroka[:-1]
             if len(self.stroka) == 0:
                 self.stroka = '_' * 81
-                self.flag = 0
+                self.flag_empty_str = 0
             self.label.setText(self.stroka[-80:])  
             
     def mod11(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('%')
         self.label.setText(self.stroka[-80:])
         
     def kvadr1(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('^2')
@@ -268,79 +275,79 @@ class MyWidget(QMainWindow):
         
     
     def kub1(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('^3')
         self.label.setText(self.stroka[-80:])   
         
     def stepen1(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str('^')
         self.label.setText(self.stroka[-80:])    
         
     def probell(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka += str(' ')
         self.label.setText(self.stroka[-80:])   
         
     def sin11(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += str('sin(')
         self.label.setText(self.stroka[-80:])   
     
     def cos11(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += str('cos(')
         self.label.setText(self.stroka[-80:])   
         
     def tan11(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += str('tan(')
         self.label.setText(self.stroka[-80:])      
         
     def skobka(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += str(self.sender().text())
         self.label.setText(self.stroka[-80:])    
         
     def kore(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += str('√(')
         self.label.setText(self.stroka[-80:])  
     
     def ee(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
-            self.flag = 1
+            self.flag_empty_str = 1
         self.stroka += str('e')
         self.label.setText(self.stroka[-80:]) 
         
     def mr(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             self.stroka = ''
             if self.memory != 0:
-                self.flag = 1
+                self.flag_empty_str = 1
         self.stroka += str(self.memory)
         self.labelmemory.setText(str(self.memory)) 
         self.label.setText(self.stroka[-80:])
     
     def ceil2(self):
-        if self.flag == 0:
+        if self.flag_empty_str == 0:
             pass
         else:
             self.stroka = "округлить" + '(' + self.stroka + ')'
@@ -368,10 +375,10 @@ class MyWidget(QMainWindow):
         number = int(e.key())
         if number >= 48 and number <= 57:
             number -= 48
-            if self.flag == 0:
+            if self.flag_empty_str == 0:
                 self.stroka = ''
                 if number != 0:
-                    self.flag = 1
+                    self.flag_empty_str = 1
             self.stroka += str(number)
             self.label.setText(self.stroka[-80:]) 
         elif number == 16777219:
